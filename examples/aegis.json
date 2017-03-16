@@ -1,0 +1,14 @@
+This is an example of a potential Aegis server configuration, in JSON (with comments, so it's not really valid JSON)
+
+{
+    "servers": [ (list of JSON configs per server)
+        {
+            "name": "iPwnAge Survival", (string of server name)
+            "uuid": "xHfa8", (a unique, 5 char string of a server used internally to identify each server. this ID is used for data structure of backups) - NOT CHANGEABLE
+            "directory": "/home/minecraft/survival/", (string of server's operating directory)
+            "what_to_backup": ["whole"], (a list of folders to backup. 'whole' means the whole server directory, including subfolders, are backed up)
+            "email_notification": ["email@domain.com", "each"] (list of strings; email notification details. 'None' if user disables notifications. 'each' for each backup made (excluding manual ones), 'daily' for a summary of each day,)
+            "backup_interval": 60 (int detailing when the server's backup is supposed to occur. in minutes)
+        }
+    ]
+}

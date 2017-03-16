@@ -1,0 +1,21 @@
+This is an example of an Aegis data file. This is responsible for storing backup information.
+
+{
+    "backups": [ (list of JSON, storing all current backups within the server storage system. organized by server UUID)
+        {
+            "xHfa8": [
+                {
+                    "date": 1489696372, (int of UNIX timestamp when backup was made)
+                    "size": 43200, (int of backup size in MB)
+                    "hash": TBD, (md5 is expensive to compute, but i will figure out a way of very quickly hashing the tar.gz file for data integrity check)
+                },
+                { (another backup)
+                    "date": 1489696500, (int of UNIX timestamp when backup was made)
+                    "size": 43223, (int of backup size in MB)
+                    "hash": TBD, (md5 is expensive to compute, but i will figure out a way of very quickly hashing the tar.gz file for data integrity check)
+                },
+
+            ],
+        }
+    ],
+}
