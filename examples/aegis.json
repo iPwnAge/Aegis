@@ -10,5 +10,6 @@ This is an example of a potential Aegis server configuration, in JSON (with comm
             "email_notification": ["email@domain.com", "each"] (list of strings; email notification details. 'None' if user disables notifications. 'each' for each backup made (excluding manual ones), 'daily' for a summary of each day,)
             "backup_interval": 60 (int detailing when the server's backup is supposed to occur. in minutes)
         }
-    ]
+    ],
+    "version": 1 (int of version, used to ensure configuration compatbility with current Aegis version.)
 }
