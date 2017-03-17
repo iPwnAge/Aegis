@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import sys, os, json
+from utils.term_colors import bcolors
 
 class Aegis:
     def __init__(self, workingdir):
@@ -12,8 +13,8 @@ class Aegis:
 
     def initialize_aegis(self):
         #Aegis first-time initialization. Here is where the aegis.json configuration is created within the user's home directory.
-        print "Welcome to Aegis! Let's get started."
-        print "First, I need to know where your server directory is. If you have multiple, you'll be able to add more after the first server is setup."
+        print bcolors.OKBLUE + "Welcome to Aegis! Let's get started." + bcolors.ENDC
+        print bcolors.OKBLUE + "First, I need to know where your server directory is. If you have multiple, you'll be able to add more after the first server is setup." + bcolors.ENDC
         self.add_server()
 
         #Server add loop if a user wants to bulk add servers to Aegis.
@@ -28,13 +29,13 @@ class Aegis:
                 os.makedirs(self.data_directory)
                 with open(self.data_directory + "aegis.json", "w+") as aegis_config_file:
                     json.dump(self.aegis_config, aegis_config_file)
-                print "Aegis is fully configured. Now returning you to main menu."
+                print bcolors.OKGREEN + "Aegis is fully configured. Now returning you to main menu." + bcolors.ENDC
                 self.aegis_runtime()
 
 
     def add_server(self):
         ## USER INPUT: string of their server's directory root
-        server_directory_string = str(raw_input("Enter your server directory: "))
+        server_directory_string = str(raw_input(bcolors.OKBLUE + "Enter your server directory: " + bcolors.ENDC))
         if not server_directory_string.endswith('/'):
             server_directory_string += "/"
 
@@ -51,10 +52,10 @@ class Aegis:
             if len(matches) > 0:
                 print "Great. I've found " + str(len(matches)) + " maps. Here's the list:"
                 for discovered_map in matches:
-                    print discovered_map[len(server_directory_string):-9]
+                    print discovered_map[len(server_directory_string):-9] #Get map "name" by only grabbing the directory substring between the length of the server directory, and before the level.dat.
             #Aegis couldn't discover any maps within the server dir. Perhaps non-standard configuration, move user to manual declaration branch.
             else:
-                print "Hm, I couldn't find any Minecraft maps in your server folder. "
+                print bcolors.FAIL + "Hm, I couldn't find any Minecraft maps in your server folder. " + bcolors.ENDC
 
             #Add a lot more try/catch and general exception handling. As of right now the script throws an exception and quits out.
             #Ask user what they wish to back up
@@ -65,7 +66,7 @@ class Aegis:
             #Ask user name for server
             #Write to self.aegis_config
         else:
-            print "Hm, I couldn't find a server.properties within the folder you've provided. Try again?"
+            print bcolors.FAIL +  "Hm, I couldn't find a server.properties within the folder you've provided. Try again?" + bcolors.ENDC
             self.add_server()
 
 
