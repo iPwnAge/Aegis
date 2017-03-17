@@ -33,16 +33,30 @@ class Aegis:
 
 
     def add_server(self):
+        ## USER INPUT: string of their server's directory root
         server_directory_string = str(raw_input("Enter your server directory: "))
         if not server_directory_string.endswith('/'):
             server_directory_string += "/"
-        print server_directory_string + "server.properties"
+
+        #Check to see if it's a valid server root by checking for the existence of server.properties
         if os.path.exists(server_directory_string + "server.properties"):
-            pass
-            #Parse server.properties and get level-name. Why? not sure. will determine if necessary
-            #Scan sub-dirs for level.dat. level.dat is indicative of a MC map folder, and is the only reliable way of discovering ALL maps
-            #--->(i.e. bukkit plugin maps won't show in server.properties)
-            #Prompt user with detected folders. Ask if they'd like to add more
+
+        #Scan for server maps by walking all sub-folders and checking for level.dat (this should be expanded for further checks, i.e. the playerdata and region folders)
+            import fnmatch
+            matches = []
+            for root, dirnames, filenames in os.walk(server_directory_string):
+                for filename in fnmatch.filter(filenames, 'level.dat'):
+                    matches.append(os.path.join(root, filename))
+            #Cool, we found some maps
+            if len(matches) > 0:
+                print "Great. I've found " + str(len(matches)) + " maps. Here's the list:"
+                for discovered_map in matches:
+                    print discovered_map[len(server_directory_string):-9]
+            #Aegis couldn't discover any maps within the server dir. Perhaps non-standard configuration, move user to manual declaration branch.
+            else:
+                print "Hm, I couldn't find any Minecraft maps in your server folder. "
+
+            #Add a lot more try/catch and general exception handling. As of right now the script throws an exception and quits out.
             #Ask user what they wish to back up
             #Ask user interval
             #Ask user email notifications (should this be added to the initialize_aegis fun?)
