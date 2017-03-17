@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import sys, os, json
-from os.path import expanduser
 
 class Aegis:
     def __init__(self, workingdir):
@@ -94,7 +93,7 @@ class Aegis:
 if __name__ == "__main__":
 
     #Get user's home directory (with some semblance of cross-platform support)
-    home = expanduser("~")
+    home = os.path.expanduser("~")
     if not home.endswith("/"):
         home += "/"
     new_aegis = Aegis(home + ".aegis_mc/")
